@@ -4,6 +4,8 @@ body {
     margin: 0;
     padding: 20px;
     color: #333;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 h1, h2, h3 {
@@ -24,7 +26,7 @@ h1, h2, h3 {
     margin-bottom: 10px;
 }
 
-textarea, select {
+textarea, select, input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -58,4 +60,18 @@ button {
 
 button:hover {
     background-color: #2980b9;
+}
+
+#dpiaListItems {
+    list-style-type: none;
+    padding: 0;
+}
+
+#dpiaListItems li {
+    margin-bottom: 10px;
+}
+
+#dpiaListItems button {
+    width: 100%;
+    text-align: left;
 }
