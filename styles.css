@@ -1,3 +1,21 @@
+header {
+    background-color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+    height: 40px; /* Adjust this value to fit your needs */
+    width: auto;
+}
+
+/* Adjust your existing container style */
+.container {
+    margin-top: 20px; /* Add some space below the header */
+    /* ... rest of your container styles ... */
+}
+
+
 :root {
     --primary-color: #0052CC;  /* A vibrant blue from the palette */
     --secondary-color: #172B4D; /* A dark blue for text */
