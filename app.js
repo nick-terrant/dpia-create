@@ -333,11 +333,6 @@ function initApp() {
     }
 }
 
-// Ensure the DOM is fully loaded before running the script
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOMContentLoaded event fired");
-    initApp();
-});
 
 console.log("End of app.js file reached");
 function logToPage(message) {
@@ -350,3 +345,10 @@ function logToPage(message) {
         console.error("Error display element not found");
     }
 }
+
+
+// Ensure the DOM is fully loaded before running the script
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOMContentLoaded event fired");
+    initApp();
+});
