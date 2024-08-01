@@ -1,10 +1,36 @@
-let dpias = [];
-let currentDPIA = null;
-
-// ... (keep the existing functions for createNewDPIA, updateDPIAList, showDPIAStep1, and handleStep1Submit)
+// ... (keep earlier functions unchanged)
 
 function showDPIAStep2() {
-    // ... (keep the existing showDPIAStep2 function)
+    console.log("Showing DPIA Step 2");
+    document.getElementById('dpiaStep1').style.display = 'none';
+    const step2Element = document.getElementById('dpiaStep2');
+    step2Element.style.display = 'block';
+    step2Element.innerHTML = `
+        <h2>Step 2: Describe the processing</h2>
+        <form id="dpiaStep2Form">
+            <div class="form-section">
+                <h3>1. Nature of the processing</h3>
+                <p class="explanation">How will you collect, use, store and delete data? What is the source of the data? Will you be sharing data with anyone?</p>
+                <textarea id="processingNature" required>${currentDPIA.steps.step2?.processingNature || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>2. Scope of the processing</h3>
+                <p class="explanation">What is the nature of the data, and does it include special category or criminal offence data? How much data will you be collecting and using? How often? How long will you keep it? How many individuals are affected? What geographical area does it cover?</p>
+                <textarea id="processingScope" required>${currentDPIA.steps.step2?.processingScope || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>3. Context of the processing</h3>
+                <p class="explanation">What is the nature of your relationship with the individuals? How much control will they have? Would they expect you to use their data in this way? Do they include children or other vulnerable groups? Are there prior concerns over this type of processing or security flaws? Is it novel in any way? What is the current state of technology in this area?</p>
+                <textarea id="processingContext" required>${currentDPIA.steps.step2?.processingContext || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>4. Purposes of the processing</h3>
+                <p class="explanation">What do you want to achieve? What is the intended effect on individuals? What are the benefits of the processing for you, and more broadly?</p>
+                <textarea id="processingPurposes" required>${currentDPIA.steps.step2?.processingPurposes || ''}</textarea>
+            </div>
+            <button type="submit">Continue to Step 3</button>
+        </form>
+    `;
     document.getElementById('dpiaStep2Form').onsubmit = handleStep2Submit;
 }
 
@@ -79,9 +105,4 @@ function handleStep4Submit(e) {
     updateDPIAList();
 }
 
-// Initialize the app
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM fully loaded and parsed");
-    document.getElementById('createNewDPIA').addEventListener('click', createNewDPIA);
-    updateDPIAList();
-});
+// ... (keep the initialization code unchanged)
