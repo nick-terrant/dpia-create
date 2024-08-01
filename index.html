@@ -24,7 +24,29 @@
         
         
         <div id="dpiaStep1" class="dpia-step hidden">
-            <h2>Step 1: Identify the need for a DPIA</h2>
+    <h2>Step 1: Identify the need for a DPIA</h2>
+    <form id="dpiaStep1Form">
+        <div class="form-section">
+            <h3>1. What is the lawful basis for processing?</h3>
+            <select id="lawfulBasis" required>
+                <option value="">Select a lawful basis</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+        <div class="form-section">
+            <h3>2. What are the processing purposes?</h3>
+            <select id="processingPurpose" required>
+                <option value="">Select a processing purpose</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+        </div>
+        <div class="form-section">
+            <h3>3. What categories of data will be processed?</h3>
+            <div id="dataCategories" class="checkbox-grid">
+                <!-- Checkboxes will be populated dynamically -->
+            </div>
+        </div>
+
             <!-- Content will be dynamically populated by JavaScript -->
         </div>
         
@@ -32,6 +54,8 @@
             <h2>Step 2: Describe the processing</h2>
             <!-- Content will be dynamically populated by JavaScript -->
         </div>
+
+        
         
         <div id="dpiaStep3" class="dpia-step hidden">
             <h2>Step 3: Consultation process</h2>
@@ -44,6 +68,9 @@
         </div>
     </div>
      </div>
+    <button type="submit" class="primary-button">Continue to Step 2</button>
+    </form>
+    </div>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
