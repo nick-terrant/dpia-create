@@ -3,6 +3,7 @@ import DPIAList from "./DPIAList";
 import DPIAStep1 from "./DPIAStep1";
 import DPIAStep2 from "./DPIAStep2";
 import DPIAStep3 from "./DPIAStep3";
+import './App.css';
 
 export default function App() {
   const [currentView, setCurrentView] = useState("list");
