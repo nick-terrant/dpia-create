@@ -160,9 +160,6 @@ async function handleStep1Submit(e) {
             lawfulBasis: document.getElementById('lawfulBasis').value,
             processingPurpose: document.getElementById('processingPurpose').value,
             dataCategories: selectedCategories,
-
-        currentDPIA.steps = currentDPIA.steps || {};
-        currentDPIA.steps.step1 = {
             projectAims: document.getElementById('projectAims').value,
             processingType: document.getElementById('processingType').value,
             dataSource: document.getElementById('dataSource').value,
@@ -172,11 +169,10 @@ async function handleStep1Submit(e) {
         console.log("Updating DPIA with ID:", currentDPIA.id);
         
         // Update Firestore
-        await db.collection("dpias").doc(currentDPIA.id).update({
+       await db.collection("dpias").doc(currentDPIA.id).update({
             "steps.step1": currentDPIA.steps.step1
         });
-
-        console.log("Step 1 data saved successfully");
+       console.log("Step 1 data saved successfully");
         showDPIAStep2();
     } catch (error) {
         console.error("Error in handleStep1Submit:", error);
@@ -184,6 +180,7 @@ async function handleStep1Submit(e) {
         alert("An error occurred while saving Step 1. Please try again.");
     }
 }
+
 
 function showDPIAStep2() {
     console.log("Showing DPIA Step 2");
