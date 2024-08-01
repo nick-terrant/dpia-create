@@ -109,7 +109,7 @@ async function deleteSelectedDPIAs() {
 
 
 function showDPIAStep1(dpia) {
-    console.log("Showing DPIA Step 1", dpia);
+   fetchFirestoreData();
     currentDPIA = dpia;
     
     document.getElementById('dpiaList').classList.add('hidden');
@@ -147,13 +147,19 @@ function showDPIAStep1(dpia) {
 
 async function handleStep1Submit(e) {
     e.preventDefault();
-    console.log("Handling Step 1 submission");
     try {
         if (!currentDPIA || !currentDPIA.id) {
             throw new Error("No current DPIA or DPIA ID is missing");
         }
 
-        console.log("Current DPIA:", currentDPIA);
+        const selectedCategories = Array.from(
+            document.querySelectorAll('#dataCategories input:checked')
+        ).map(checkbox => checkbox.value);
+
+        currentDPIA.steps.step1 = {
+            lawfulBasis: document.getElementById('lawfulBasis').value,
+            processingPurpose: document.getElementById('processingPurpose').value,
+            dataCategories: selectedCategories,
 
         currentDPIA.steps = currentDPIA.steps || {};
         currentDPIA.steps.step1 = {
@@ -169,7 +175,7 @@ async function handleStep1Submit(e) {
         await db.collection("dpias").doc(currentDPIA.id).update({
             "steps.step1": currentDPIA.steps.step1
         });
-        
+
         console.log("Step 1 data saved successfully");
         showDPIAStep2();
     } catch (error) {
@@ -352,6 +358,54 @@ function initApp() {
         logToPage("Error in initialization: " + error.message);
     }
 }
+async function fetchFirestoreData() {
+    try {
+        const lawfulBases = await fetchCollectionData('LawfulBases', 'lawful-basis-list');
+        const processingPurposes = await fetchCollectionData('processingPurposes', 'purposes');
+        const dataCategories = await fetchCollectionData('dataCategories', 'categories');
+
+        populateSelect('lawfulBasis', lawfulBases);
+        populateSelect('processingPurpose', processingPurposes);
+        populateCheckboxGrid('dataCategories', dataCategories);
+    } catch (error) {
+        console.error("Error fetching Firestore data:", error);
+        logToPage("Error fetching data. Please try refreshing the page.");
+    }
+}
+
+async function fetchCollectionData(collectionName, fieldName) {
+    const snapshot = await db.collection(collectionName).get();
+    if (snapshot.empty) {
+        console.log(`No documents found in ${collectionName}`);
+        return [];
+    }
+    return snapshot.docs[0].data()[fieldName] || [];
+}
+
+function populateSelect(elementId, options) {
+    const select = document.getElementById(elementId);
+    options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.textContent = option;
+        select.appendChild(optionElement);
+    });
+}
+
+function populateCheckboxGrid(elementId, options) {
+    const grid = document.getElementById(elementId);
+    options.forEach(option => {
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'dataCategory';
+        checkbox.value = option;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(option));
+        grid.appendChild(label);
+    });
+}
+
 
 console.log("End of app.js file reached");
 function logToPage(message) {
