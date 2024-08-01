@@ -183,4 +183,45 @@ button:hover {
     h3 {
         font-size: 1.25rem;
     }
+
+.dpia-list-container {
+    max-width: 600px;
+    margin-left: 0;
+}
+
+.dpia-list-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+#dpiaListItems {
+    list-style-type: none;
+    padding: 0;
+}
+
+#dpiaListItems li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#dpiaListItems input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#dpiaListItems button {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.secondary-button {
+    background-color: #DEEBFF;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.secondary-button:hover {
+    background-color: #B3D4FF;
+}
 }
