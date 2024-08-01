@@ -3,6 +3,7 @@ let currentDPIA = null;
 
 function createNewDPIA() {
     console.log("Creating new DPIA");
+    logToPage("Creating new DPIA");
     try {
         const newDPIA = { id: Date.now(), status: 'draft', steps: {} };
         dpias.push(newDPIA);
@@ -10,8 +11,18 @@ function createNewDPIA() {
         showDPIAStep1(newDPIA);
     } catch (error) {
         console.error("Error in createNewDPIA:", error);
+        logToPage("Error in createNewDPIA: " + error.message);
     }
 }
+
+function logToPage(message) {
+    const errorDisplay = document.getElementById('errorDisplay');
+    if (errorDisplay) {
+        errorDisplay.style.display = 'block';
+        errorDisplay.innerHTML += message + '<br>';
+    }
+}
+
 
 function updateDPIAList() {
     console.log("Updating DPIA list");
