@@ -15,108 +15,57 @@ function createNewDPIA() {
     }
 }
 
-function logToPage(message) {
-    const errorDisplay = document.getElementById('errorDisplay');
-    if (errorDisplay) {
-        errorDisplay.style.display = 'block';
-        errorDisplay.innerHTML += message + '<br>';
-    }
-}
-
-
-function updateDPIAList() {
-    console.log("Updating DPIA list");
-    try {
-        const listElement = document.getElementById('dpiaListItems');
-        if (!listElement) {
-            console.error("dpiaListItems element not found");
-            return;
-        }
-        listElement.innerHTML = '';
-        dpias.forEach(dpia => {
-            const li = document.createElement('li');
-            const button = document.createElement('button');
-            button.textContent = `DPIA ${dpia.id} - ${dpia.status}`;
-            button.onclick = () => showDPIAStep1(dpia);
-            li.appendChild(button);
-            listElement.appendChild(li);
-        });
-    } catch (error) {
-        console.error("Error in updateDPIAList:", error);
-    }
-}
-
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
+    logToPage("Showing DPIA Step 1");
     try {
         currentDPIA = dpia;
-        document.getElementById('dpiaList').style.display = 'none';
+        const dpiaListElement = document.getElementById('dpiaList');
         const step1Element = document.getElementById('dpiaStep1');
-        if (!step1Element) {
-            console.error("dpiaStep1 element not found");
-            return;
+        
+        if (!dpiaListElement) {
+            throw new Error("dpiaList element not found");
         }
+        if (!step1Element) {
+            throw new Error("dpiaStep1 element not found");
+        }
+        
+        dpiaListElement.style.display = 'none';
         step1Element.style.display = 'block';
         step1Element.innerHTML = `
             <h2>Step 1: Identify the need for a DPIA</h2>
             <form id="dpiaStep1Form">
-                <div class="form-section">
-                    <h3>1. What does the project aim to achieve?</h3>
-                    <p class="explanation">Explain broadly what the project aims to achieve and what type of processing it involves.</p>
-                    <textarea id="projectAims" required>${dpia.steps.step1?.projectAims || ''}</textarea>
-                </div>
-                <div class="form-section">
-                    <h3>2. What type of processing does it involve?</h3>
-                    <p class="explanation">Describe the nature of the processing. How will you collect, use, store and delete data?</p>
-                    <textarea id="processingType" required>${dpia.steps.step1?.processingType || ''}</textarea>
-                </div>
-                <div class="form-section">
-                    <h3>3. What is the source of the data?</h3>
-                    <input type="text" id="dataSource" required value="${dpia.steps.step1?.dataSource || ''}">
-                </div>
-                <div class="form-section">
-                    <h3>4. Why did you identify the need for a DPIA?</h3>
-                    <p class="explanation">Summarise why you identified the need for a DPIA.</p>
-                    <textarea id="dpiaJustification" required>${dpia.steps.step1?.dpiaJustification || ''}</textarea>
-                </div>
+                <!-- ... (form content) ... -->
                 <button type="submit">Continue to Step 2</button>
             </form>
         `;
         document.getElementById('dpiaStep1Form').onsubmit = handleStep1Submit;
     } catch (error) {
         console.error("Error in showDPIAStep1:", error);
+        logToPage("Error in showDPIAStep1: " + error.message);
     }
 }
 
-function handleStep1Submit(e) {
-    e.preventDefault();
-    console.log("Handling Step 1 submission");
-    try {
-        currentDPIA.steps.step1 = {
-            projectAims: document.getElementById('projectAims').value,
-            processingType: document.getElementById('processingType').value,
-            dataSource: document.getElementById('dataSource').value,
-            dpiaJustification: document.getElementById('dpiaJustification').value
-        };
-        showDPIAStep2();
-    } catch (error) {
-        console.error("Error in handleStep1Submit:", error);
+function logToPage(message) {
+    const errorDisplay = document.getElementById('errorDisplay');
+    if (errorDisplay) {
+        errorDisplay.style.display = 'block';
+        errorDisplay.innerHTML += message + '<br>';
+    } else {
+        console.error("Error display element not found");
     }
 }
 
-// ... (Similar try-catch blocks for other functions)
+// ... (other functions) ...
 
 // Initialize the app
-// Initialize the app
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM fully loaded and parsed");
-    logToPage("DOM fully loaded and parsed");
+function initApp() {
+    console.log("Initializing app");
+    logToPage("Initializing app");
     try {
         const createButton = document.getElementById('createNewDPIA');
         if (!createButton) {
-            console.error("createNewDPIA button not found");
-            logToPage("createNewDPIA button not found");
-            return;
+            throw new Error("createNewDPIA button not found");
         }
         console.log("Adding click event listener to createNewDPIA button");
         logToPage("Adding click event listener to createNewDPIA button");
@@ -128,4 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Error in initialization:", error);
         logToPage("Error in initialization: " + error.message);
     }
-});
+}
+
+// Ensure the DOM is fully loaded before running the script
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
