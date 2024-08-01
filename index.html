@@ -7,17 +7,21 @@
 </head>
 <body>
     <header>
-        <img src="images/Terrant-Security-Logo-CMYK-Logotype.png" alt="Terrant Logo" class="logo">
+        <img src="images/terrant-logo.png" alt="Terrant Logo" class="logo">
     </header>
     <div class="container">
         <h1>DPIA Prototype</h1>
         <div id="errorDisplay" class="hidden"></div>
         
-        <div id="dpiaList">
+        <div id="dpiaList" class="dpia-list-container">
             <h2>Your DPIAs</h2>
-            <button id="createNewDPIA" class="primary-button">Create New DPIA</button>
+            <div class="dpia-list-actions">
+                <button id="createNewDPIA" class="primary-button">Create New DPIA</button>
+                <button id="deleteSelectedDPIAs" class="secondary-button">Delete Selected</button>
+            </div>
             <ul id="dpiaListItems"></ul>
         </div>
+        
         
         <div id="dpiaStep1" class="dpia-step hidden">
             <h2>Step 1: Identify the need for a DPIA</h2>
