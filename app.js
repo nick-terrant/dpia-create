@@ -26,6 +26,27 @@ try {
   console.error("Error initializing Firebase:", error);
 }
 
+
+async function createNewDPIA() {
+    console.log("createNewDPIA function called");
+    logToPage("Creating new DPIA");
+    try {
+        const newDPIA = { status: 'draft', steps: {} };
+        console.log("New DPIA object created:", newDPIA);
+        
+        const docRef = await db.collection("dpias").add(newDPIA);
+        newDPIA.id = docRef.id;
+        
+        dpias.push(newDPIA);
+        console.log("DPIA added to local array and Firestore with ID:", newDPIA.id);
+        await updateDPIAList();
+        showDPIAStep1(newDPIA);
+    } catch (error) {
+        console.error("Error in createNewDPIA:", error);
+        logToPage("Error in createNewDPIA: " + error.message);
+    }
+}
+
 async function updateDPIAList() {
     console.log("updateDPIAList function called");
     try {
@@ -94,6 +115,10 @@ async function handleStep1Submit(e) {
     e.preventDefault();
     console.log("Handling Step 1 submission");
     try {
+        if (!currentDPIA || !currentDPIA.id) {
+            throw new Error("No current DPIA or DPIA ID is missing");
+        }
+
         currentDPIA.steps = currentDPIA.steps || {};
         currentDPIA.steps.step1 = {
             projectAims: document.getElementById('projectAims').value,
@@ -101,6 +126,8 @@ async function handleStep1Submit(e) {
             dataSource: document.getElementById('dataSource').value,
             dpiaJustification: document.getElementById('dpiaJustification').value
         };
+        
+        console.log("Updating DPIA with ID:", currentDPIA.id);
         
         // Update Firestore
         await db.collection("dpias").doc(currentDPIA.id).update({
@@ -112,12 +139,15 @@ async function handleStep1Submit(e) {
         // For now, let's just go back to the DPIA list
         document.getElementById('dpiaStep1').style.display = 'none';
         document.getElementById('dpiaList').style.display = 'block';
-        updateDPIAList();
+        await updateDPIAList();
     } catch (error) {
         console.error("Error in handleStep1Submit:", error);
         logToPage("Error in handleStep1Submit: " + error.message);
+        // Display a user-friendly error message
+        alert("An error occurred while saving the DPIA. Please try again.");
     }
 }
+
 
 function initApp() {
     console.log("initApp function called");
