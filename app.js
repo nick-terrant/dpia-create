@@ -107,17 +107,25 @@ function handleStep1Submit(e) {
 // ... (Similar try-catch blocks for other functions)
 
 // Initialize the app
+// Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded and parsed");
+    logToPage("DOM fully loaded and parsed");
     try {
         const createButton = document.getElementById('createNewDPIA');
         if (!createButton) {
             console.error("createNewDPIA button not found");
+            logToPage("createNewDPIA button not found");
             return;
         }
+        console.log("Adding click event listener to createNewDPIA button");
+        logToPage("Adding click event listener to createNewDPIA button");
         createButton.addEventListener('click', createNewDPIA);
+        console.log("Click event listener added successfully");
+        logToPage("Click event listener added successfully");
         updateDPIAList();
     } catch (error) {
         console.error("Error in initialization:", error);
+        logToPage("Error in initialization: " + error.message);
     }
 });
