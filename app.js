@@ -26,26 +26,6 @@ try {
   console.error("Error initializing Firebase:", error);
 }
 
-async function createNewDPIA() {
-    console.log("createNewDPIA function called");
-    logToPage("Creating new DPIA");
-    try {
-        const newDPIA = { id: Date.now().toString(), status: 'draft', steps: {} };
-        console.log("New DPIA object created:", newDPIA);
-        
-        const docRef = await db.collection("dpias").add(newDPIA);
-        newDPIA.id = docRef.id;
-        
-        dpias.push(newDPIA);
-        console.log("DPIA added to local array");
-        await updateDPIAList();
-        showDPIAStep1(newDPIA);
-    } catch (error) {
-        console.error("Error in createNewDPIA:", error);
-        logToPage("Error in createNewDPIA: " + error.message);
-    }
-}
-
 async function updateDPIAList() {
     console.log("updateDPIAList function called");
     try {
@@ -76,7 +56,67 @@ async function updateDPIAList() {
 
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
-    // ... (implement the rest of this function)
+    currentDPIA = dpia;
+    
+    // Hide the DPIA list and show the Step 1 form
+    document.getElementById('dpiaList').style.display = 'none';
+    const step1Element = document.getElementById('dpiaStep1');
+    step1Element.style.display = 'block';
+    
+    // Populate the form with existing data if available
+    step1Element.innerHTML = `
+        <h2>Step 1: Identify the need for a DPIA</h2>
+        <form id="dpiaStep1Form">
+            <div class="form-section">
+                <h3>1. What does the project aim to achieve?</h3>
+                <textarea id="projectAims" required>${dpia.steps?.step1?.projectAims || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>2. What type of processing does it involve?</h3>
+                <textarea id="processingType" required>${dpia.steps?.step1?.processingType || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>3. What is the source of the data?</h3>
+                <input type="text" id="dataSource" required value="${dpia.steps?.step1?.dataSource || ''}">
+            </div>
+            <div class="form-section">
+                <h3>4. Why did you identify the need for a DPIA?</h3>
+                <textarea id="dpiaJustification" required>${dpia.steps?.step1?.dpiaJustification || ''}</textarea>
+            </div>
+            <button type="submit">Continue to Step 2</button>
+        </form>
+    `;
+    
+    document.getElementById('dpiaStep1Form').onsubmit = handleStep1Submit;
+}
+
+async function handleStep1Submit(e) {
+    e.preventDefault();
+    console.log("Handling Step 1 submission");
+    try {
+        currentDPIA.steps = currentDPIA.steps || {};
+        currentDPIA.steps.step1 = {
+            projectAims: document.getElementById('projectAims').value,
+            processingType: document.getElementById('processingType').value,
+            dataSource: document.getElementById('dataSource').value,
+            dpiaJustification: document.getElementById('dpiaJustification').value
+        };
+        
+        // Update Firestore
+        await db.collection("dpias").doc(currentDPIA.id).update({
+            "steps.step1": currentDPIA.steps.step1
+        });
+        
+        console.log("Step 1 data saved successfully");
+        // Here you would typically move to Step 2
+        // For now, let's just go back to the DPIA list
+        document.getElementById('dpiaStep1').style.display = 'none';
+        document.getElementById('dpiaList').style.display = 'block';
+        updateDPIAList();
+    } catch (error) {
+        console.error("Error in handleStep1Submit:", error);
+        logToPage("Error in handleStep1Submit: " + error.message);
+    }
 }
 
 function initApp() {
