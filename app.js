@@ -26,19 +26,19 @@ try {
   console.error("Error initializing Firestore:", error);
 }
 
-
-
-let dpias = [];
-let currentDPIA = null;
-
-async function createNewDPIA() {
-    console.log("Creating new DPIA");
+function createNewDPIA() {
+    console.log("createNewDPIA function called");
     logToPage("Creating new DPIA");
     try {
         const newDPIA = { id: Date.now(), status: 'draft', steps: {} };
-        const docRef = await db.collection("dpias").add(newDPIA);
-        newDPIA.id = docRef.id;
+        console.log("New DPIA object created:", newDPIA);
+        
+        // Temporarily comment out Firestore operations for testing
+        // const docRef = await db.collection("dpias").add(newDPIA);
+        // newDPIA.id = docRef.id;
+        
         dpias.push(newDPIA);
+        console.log("DPIA added to local array");
         updateDPIAList();
         showDPIAStep1(newDPIA);
     } catch (error) {
@@ -47,8 +47,8 @@ async function createNewDPIA() {
     }
 }
 
-async function updateDPIAList() {
-    console.log("Updating DPIA list");
+function updateDPIAList() {
+    console.log("updateDPIAList function called");
     try {
         const listElement = document.getElementById('dpiaListItems');
         if (!listElement) {
@@ -56,9 +56,7 @@ async function updateDPIAList() {
         }
         listElement.innerHTML = '';
         
-        const snapshot = await db.collection("dpias").get();
-        dpias = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
-        
+        console.log("Number of DPIAs:", dpias.length);
         dpias.forEach(dpia => {
             const li = document.createElement('li');
             const button = document.createElement('button');
@@ -73,69 +71,20 @@ async function updateDPIAList() {
     }
 }
 
-// Modify handleStep1Submit, handleStep2Submit, handleStep3Submit, and handleStep4Submit
-// to update the Firestore document after each step submission
-
-async function handleStep1Submit(e) {
-    e.preventDefault();
-    console.log("Handling Step 1 submission");
-    try {
-        currentDPIA.steps.step1 = {
-            projectAims: document.getElementById('projectAims').value,
-            processingType: document.getElementById('processingType').value,
-            dataSource: document.getElementById('dataSource').value,
-            dpiaJustification: document.getElementById('dpiaJustification').value
-        };
-        await db.collection("dpias").doc(currentDPIA.id).update({
-            "steps.step1": currentDPIA.steps.step1
-        });
-        showDPIAStep2();
-    } catch (error) {
-        console.error("Error in handleStep1Submit:", error);
-        logToPage("Error in handleStep1Submit: " + error.message);
-    }
-}
-
-// Similarly, update handleStep2Submit, handleStep3Submit, and handleStep4Submit
-
-async function handleStep4Submit(e) {
-    e.preventDefault();
-    console.log("Handling Step 4 submission");
-    try {
-        currentDPIA.steps.step4 = {
-            necessityProportionality: document.getElementById('necessityProportionality').value
-        };
-        currentDPIA.status = 'completed';
-        await db.collection("dpias").doc(currentDPIA.id).update({
-            "steps.step4": currentDPIA.steps.step4,
-            status: 'completed'
-        });
-        document.getElementById('dpiaStep4').style.display = 'none';
-        document.getElementById('dpiaList').style.display = 'block';
-        updateDPIAList();
-    } catch (error) {
-        console.error("Error in handleStep4Submit:", error);
-        logToPage("Error in handleStep4Submit: " + error.message);
-    }
-}
-
-
-
-// Modify initApp to load DPIAs from Firestore when the app starts
 function initApp() {
-  console.log("initApp function called");
-    logToPage("Initializing app");
+    console.log("initApp function called");
     try {
         const createButton = document.getElementById('createNewDPIA');
         if (!createButton) {
             throw new Error("createNewDPIA button not found");
         }
         console.log("Adding click event listener to createNewDPIA button");
-        logToPage("Adding click event listener to createNewDPIA button");
-        createButton.addEventListener('click', createNewDPIA);
+        createButton.addEventListener('click', function(event) {
+            console.log("Create DPIA button clicked");
+            createNewDPIA();
+        });
         console.log("Click event listener added successfully");
-        logToPage("Click event listener added successfully");
-        await updateDPIAList(); // This now loads DPIAs from Firestore
+        updateDPIAList();
     } catch (error) {
         console.error("Error in initialization:", error);
         logToPage("Error in initialization: " + error.message);
@@ -144,11 +93,21 @@ function initApp() {
 
 // Ensure the DOM is fully loaded before running the script
 if (document.readyState === 'loading') {
-  console.log("Document still loading, adding event listener");
-  document.addEventListener('DOMContentLoaded', initApp);
+    console.log("Document still loading, adding event listener");
+    document.addEventListener('DOMContentLoaded', initApp);
 } else {
-  console.log("Document already loaded, calling initApp directly");
-  initApp();
+    console.log("Document already loaded, calling initApp directly");
+    initApp();
 }
 
-// The rest of your code remains the same
+// Add this function to log messages to the page
+function logToPage(message) {
+    console.log(message); // Also log to console for debugging
+    const errorDisplay = document.getElementById('errorDisplay');
+    if (errorDisplay) {
+        errorDisplay.style.display = 'block';
+        errorDisplay.innerHTML += message + '<br>';
+    } else {
+        console.error("Error display element not found");
+    }
+}
