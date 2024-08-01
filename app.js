@@ -2,12 +2,15 @@ let dpias = [];
 let currentDPIA = null;
 
 function createNewDPIA() {
+    console.log("Creating new DPIA");
     const newDPIA = { id: Date.now(), status: 'draft', steps: {} };
     dpias.push(newDPIA);
     updateDPIAList();
+    showDPIAStep1(newDPIA);
 }
 
 function updateDPIAList() {
+    console.log("Updating DPIA list");
     const listElement = document.getElementById('dpiaListItems');
     listElement.innerHTML = '';
     dpias.forEach(dpia => {
@@ -21,6 +24,7 @@ function updateDPIAList() {
 }
 
 function showDPIAStep1(dpia) {
+    console.log("Showing DPIA Step 1", dpia);
     currentDPIA = dpia;
     document.getElementById('dpiaList').style.display = 'none';
     const step1Element = document.getElementById('dpiaStep1');
@@ -55,6 +59,7 @@ function showDPIAStep1(dpia) {
 
 function handleStep1Submit(e) {
     e.preventDefault();
+    console.log("Handling Step 1 submission");
     currentDPIA.steps.step1 = {
         projectAims: document.getElementById('projectAims').value,
         processingType: document.getElementById('processingType').value,
@@ -65,6 +70,7 @@ function handleStep1Submit(e) {
 }
 
 function showDPIAStep2() {
+    console.log("Showing DPIA Step 2");
     document.getElementById('dpiaStep1').style.display = 'none';
     const step2Element = document.getElementById('dpiaStep2');
     step2Element.style.display = 'block';
@@ -99,6 +105,7 @@ function showDPIAStep2() {
 
 function handleStep2Submit(e) {
     e.preventDefault();
+    console.log("Handling Step 2 submission");
     currentDPIA.steps.step2 = {
         processingNature: document.getElementById('processingNature').value,
         processingScope: document.getElementById('processingScope').value,
@@ -112,4 +119,8 @@ function handleStep2Submit(e) {
 }
 
 // Initialize the app
-updateDPIAList();
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed");
+    document.getElementById('createNewDPIA').addEventListener('click', createNewDPIA);
+    updateDPIAList();
+});
