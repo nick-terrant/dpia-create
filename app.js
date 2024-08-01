@@ -403,6 +403,33 @@ function populateCheckboxGrid(elementId, options) {
     });
 }
 
+function initApp() {
+    console.log("App initialization started");
+
+    // Get references to the buttons
+    const createNewButton = document.getElementById('createNewDPIA');
+    const deleteSelectedButton = document.getElementById('deleteSelectedDPIAs');
+
+    // Check if the elements exist before adding listeners
+    if (createNewButton) {
+        createNewButton.addEventListener('click', createNewDPIA);
+    } else {
+        console.error("createNewDPIA button not found!");
+    }
+
+    if (deleteSelectedButton) {
+        deleteSelectedButton.addEventListener('click', deleteSelectedDPIAs);
+    } else {
+        console.error("deleteSelectedDPIAs button not found!");
+    }
+
+    // Update the DPIA list on app initialization
+    updateDPIAList();
+    console.log("App initialization completed");
+}
+
+// Call initApp when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', initApp);
 
 console.log("End of app.js file reached");
 function logToPage(message) {
@@ -418,7 +445,6 @@ function logToPage(message) {
 
 
 // Ensure the DOM is fully loaded before running the script
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOMContentLoaded event fired");
-    initApp();
-});
+document.addEventListener('DOMContentLoaded', initApp);
+
+);
