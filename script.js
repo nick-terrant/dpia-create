@@ -28,4 +28,34 @@ export default function App() {
       )}
     </div>
   );
+// Add this to your existing JavaScript
+
+function showDPIAStep2() {
+    document.getElementById('dpiaStep1').style.display = 'none';
+    document.getElementById('dpiaStep2').style.display = 'block';
+}
+
+document.getElementById('dpiaStep2Form').onsubmit = function(e) {
+    e.preventDefault();
+    const formData = {
+        dataTypes: Array.from(document.querySelectorAll('input[name="dataTypes"]:checked')).map(el => el.value),
+        dataVolume: document.getElementById('dataVolume').value,
+        risks: Array.from(document.querySelectorAll('input[name="risks"]:checked')).map(el => el.value),
+        safeguards: document.getElementById('safeguards').value,
+        dataSharing: document.querySelector('input[name="dataSharing"]:checked').value,
+        dataSharingExplanation: document.getElementById('dataSharingExplanation').value
+    };
+    console.log('DPIA Step 2 Data:', formData);
+    // Here you would typically save the data and move to the next step
+    alert('Step 2 completed! Data logged to console.');
+    showDPIAList(); // For now, we'll just go back to the list
+};
+
+// Show/hide data sharing explanation based on selection
+document.querySelectorAll('input[name="dataSharing"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        document.getElementById('dataSharingDetails').style.display = 
+            this.value === 'yes' ? 'block' : 'none';
+    });
+});
 }
