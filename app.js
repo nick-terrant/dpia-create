@@ -26,7 +26,6 @@ try {
   console.error("Error initializing Firebase:", error);
 }
 
-
 async function createNewDPIA() {
     console.log("createNewDPIA function called");
     logToPage("Creating new DPIA");
@@ -61,7 +60,14 @@ async function updateDPIAList() {
         
         // Fetch DPIAs from Firestore
         const snapshot = await db.collection("dpias").get();
-        dpias = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        dpias = snapshot.docs.map(doc => {
+            const data = doc.data();
+            if (!data.id) {
+                console.warn("DPIA missing ID, adding it", doc.id);
+                db.collection("dpias").doc(doc.id).update({ id: doc.id });
+            }
+            return { id: doc.id, ...data };
+        });
         
         console.log("Number of DPIAs:", dpias.length);
         dpias.forEach(dpia => {
@@ -78,7 +84,6 @@ async function updateDPIAList() {
     }
 }
 
-
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
     if (!dpia.id) {
@@ -87,11 +92,6 @@ function showDPIAStep1(dpia) {
         return;
     }
     currentDPIA = dpia;
-    
-    // Rest of the function remains the same
-    // ...
-}
-
     
     // Hide the DPIA list and show the Step 1 form
     document.getElementById('dpiaList').style.display = 'none';
@@ -151,38 +151,167 @@ async function handleStep1Submit(e) {
         });
         
         console.log("Step 1 data saved successfully");
-        // Here you would typically move to Step 2
-        // For now, let's just go back to the DPIA list
-        document.getElementById('dpiaStep1').style.display = 'none';
-        document.getElementById('dpiaList').style.display = 'block';
-        await updateDPIAList();
+        showDPIAStep2();
     } catch (error) {
         console.error("Error in handleStep1Submit:", error);
         logToPage("Error in handleStep1Submit: " + error.message);
-        // Display a user-friendly error message
-        alert("An error occurred while saving the DPIA. Please try again.");
-    }
-}
-        
-        // Update Firestore
-        await db.collection("dpias").doc(currentDPIA.id).update({
-            "steps.step1": currentDPIA.steps.step1
-        });
-        
-        console.log("Step 1 data saved successfully");
-        // Here you would typically move to Step 2
-        // For now, let's just go back to the DPIA list
-        document.getElementById('dpiaStep1').style.display = 'none';
-        document.getElementById('dpiaList').style.display = 'block';
-        await updateDPIAList();
-    } catch (error) {
-        console.error("Error in handleStep1Submit:", error);
-        logToPage("Error in handleStep1Submit: " + error.message);
-        // Display a user-friendly error message
-        alert("An error occurred while saving the DPIA. Please try again.");
+        alert("An error occurred while saving Step 1. Please try again.");
     }
 }
 
+function showDPIAStep2() {
+    console.log("Showing DPIA Step 2");
+    const step2Element = document.getElementById('dpiaStep2');
+    document.getElementById('dpiaStep1').style.display = 'none';
+    step2Element.style.display = 'block';
+    
+    step2Element.innerHTML = `
+        <h2>Step 2: Describe the processing</h2>
+        <form id="dpiaStep2Form">
+            <div class="form-section">
+                <h3>1. Nature of the processing</h3>
+                <textarea id="processingNature" required>${currentDPIA.steps?.step2?.processingNature || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>2. Scope of the processing</h3>
+                <textarea id="processingScope" required>${currentDPIA.steps?.step2?.processingScope || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>3. Context of the processing</h3>
+                <textarea id="processingContext" required>${currentDPIA.steps?.step2?.processingContext || ''}</textarea>
+            </div>
+            <div class="form-section">
+                <h3>4. Purposes of the processing</h3>
+                <textarea id="processingPurposes" required>${currentDPIA.steps?.step2?.processingPurposes || ''}</textarea>
+            </div>
+            <button type="submit">Continue to Step 3</button>
+        </form>
+    `;
+    
+    document.getElementById('dpiaStep2Form').onsubmit = handleStep2Submit;
+}
+
+async function handleStep2Submit(e) {
+    e.preventDefault();
+    console.log("Handling Step 2 submission");
+    try {
+        if (!currentDPIA || !currentDPIA.id) {
+            throw new Error("No current DPIA or DPIA ID is missing");
+        }
+
+        currentDPIA.steps.step2 = {
+            processingNature: document.getElementById('processingNature').value,
+            processingScope: document.getElementById('processingScope').value,
+            processingContext: document.getElementById('processingContext').value,
+            processingPurposes: document.getElementById('processingPurposes').value
+        };
+        
+        await db.collection("dpias").doc(currentDPIA.id).update({
+            "steps.step2": currentDPIA.steps.step2
+        });
+        
+        console.log("Step 2 data saved successfully");
+        showDPIAStep3();
+    } catch (error) {
+        console.error("Error in handleStep2Submit:", error);
+        logToPage("Error in handleStep2Submit: " + error.message);
+        alert("An error occurred while saving Step 2. Please try again.");
+    }
+}
+
+function showDPIAStep3() {
+    console.log("Showing DPIA Step 3");
+    const step3Element = document.getElementById('dpiaStep3');
+    document.getElementById('dpiaStep2').style.display = 'none';
+    step3Element.style.display = 'block';
+    
+    step3Element.innerHTML = `
+        <h2>Step 3: Consultation process</h2>
+        <form id="dpiaStep3Form">
+            <div class="form-section">
+                <h3>Describe the consultation process</h3>
+                <textarea id="consultationProcess" required>${currentDPIA.steps?.step3?.consultationProcess || ''}</textarea>
+            </div>
+            <button type="submit">Continue to Step 4</button>
+        </form>
+    `;
+    
+    document.getElementById('dpiaStep3Form').onsubmit = handleStep3Submit;
+}
+
+async function handleStep3Submit(e) {
+    e.preventDefault();
+    console.log("Handling Step 3 submission");
+    try {
+        if (!currentDPIA || !currentDPIA.id) {
+            throw new Error("No current DPIA or DPIA ID is missing");
+        }
+
+        currentDPIA.steps.step3 = {
+            consultationProcess: document.getElementById('consultationProcess').value
+        };
+        
+        await db.collection("dpias").doc(currentDPIA.id).update({
+            "steps.step3": currentDPIA.steps.step3
+        });
+        
+        console.log("Step 3 data saved successfully");
+        showDPIAStep4();
+    } catch (error) {
+        console.error("Error in handleStep3Submit:", error);
+        logToPage("Error in handleStep3Submit: " + error.message);
+        alert("An error occurred while saving Step 3. Please try again.");
+    }
+}
+
+function showDPIAStep4() {
+    console.log("Showing DPIA Step 4");
+    const step4Element = document.getElementById('dpiaStep4');
+    document.getElementById('dpiaStep3').style.display = 'none';
+    step4Element.style.display = 'block';
+    
+    step4Element.innerHTML = `
+        <h2>Step 4: Assess necessity and proportionality</h2>
+        <form id="dpiaStep4Form">
+            <div class="form-section">
+                <h3>Describe compliance and proportionality measures</h3>
+                <textarea id="necessityProportionality" required>${currentDPIA.steps?.step4?.necessityProportionality || ''}</textarea>
+            </div>
+            <button type="submit">Complete DPIA</button>
+        </form>
+    `;
+    
+    document.getElementById('dpiaStep4Form').onsubmit = handleStep4Submit;
+}
+
+async function handleStep4Submit(e) {
+    e.preventDefault();
+    console.log("Handling Step 4 submission");
+    try {
+        if (!currentDPIA || !currentDPIA.id) {
+            throw new Error("No current DPIA or DPIA ID is missing");
+        }
+
+        currentDPIA.steps.step4 = {
+            necessityProportionality: document.getElementById('necessityProportionality').value
+        };
+        
+        await db.collection("dpias").doc(currentDPIA.id).update({
+            "steps.step4": currentDPIA.steps.step4,
+            status: 'completed'
+        });
+        
+        console.log("Step 4 data saved successfully");
+        alert("DPIA completed successfully!");
+        document.getElementById('dpiaStep4').style.display = 'none';
+        document.getElementById('dpiaList').style.display = 'block';
+        await updateDPIAList();
+    } catch (error) {
+        console.error("Error in handleStep4Submit:", error);
+        logToPage("Error in handleStep4Submit: " + error.message);
+        alert("An error occurred while completing the DPIA. Please try again.");
+    }
+}
 
 function initApp() {
     console.log("initApp function called");
