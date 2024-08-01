@@ -1,77 +1,31 @@
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-    color: #333;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-h1, h2, h3 {
-    color: #2c3e50;
-}
-
-.form-section {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.explanation {
-    font-style: italic;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-textarea, select, input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 10px;
-}
-
-.checkbox-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.checkbox-group label {
-    margin-bottom: 5px;
-}
-
-button {
-    background-color: #3498db;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-
-#dpiaListItems {
-    list-style-type: none;
-    padding: 0;
-}
-
-#dpiaListItems li {
-    margin-bottom: 10px;
-}
-
-#dpiaListItems button {
-    width: 100%;
-    text-align: left;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPIA Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>DPIA Prototype</h1>
+        <div id="errorDisplay" class="hidden"></div>
+        <div id="dpiaList">
+            <h2>Your DPIAs</h2>
+            <button id="createNewDPIA">Create New DPIA</button>
+            <ul id="dpiaListItems"></ul>
+        </div>
+        <div id="dpiaStep1" class="hidden"></div>
+        <div id="dpiaStep2" class="hidden"></div>
+        <div id="dpiaStep3" class="hidden"></div>
+        <div id="dpiaStep4" class="hidden"></div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <!-- Your app's JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
