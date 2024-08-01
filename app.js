@@ -1,3 +1,9 @@
+console.log("app.js loaded");
+
+// Declare dpias at the top level
+let dpias = [];
+let currentDPIA = null;
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyD1PHa_c_DzrbK_Zjt2hO4lwSdhNgZMFTo",
@@ -10,20 +16,14 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+let db;
 try {
   firebase.initializeApp(firebaseConfig);
   console.log("Firebase initialized successfully");
-} catch (error) {
-  console.error("Error initializing Firebase:", error);
-}
-
-// Initialize Firestore
-let db;
-try {
   db = firebase.firestore();
   console.log("Firestore initialized successfully");
 } catch (error) {
-  console.error("Error initializing Firestore:", error);
+  console.error("Error initializing Firebase:", error);
 }
 
 async function createNewDPIA() {
@@ -76,30 +76,10 @@ async function updateDPIAList() {
 
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
-    // ... (rest of the function)
-
-  
-function initApp() {
-    console.log("initApp function called");
-    try {
-        const createButton = document.getElementById('createNewDPIA');
-        if (!createButton) {
-            throw new Error("createNewDPIA button not found");
-        }
-        console.log("Adding click event listener to createNewDPIA button");
-        createButton.addEventListener('click', function(event) {
-            console.log("Create DPIA button clicked");
-            createNewDPIA();
-        });
-        console.log("Click event listener added successfully");
-        updateDPIAList();
-    } catch (error) {
-        console.error("Error in initialization:", error);
-        logToPage("Error in initialization: " + error.message);
-    }
+    // ... (implement the rest of this function)
 }
 
-  function initApp() {
+function initApp() {
     console.log("initApp function called");
     try {
         const createButton = document.getElementById('createNewDPIA');
@@ -138,5 +118,3 @@ if (document.readyState === 'loading') {
     console.log("Document already loaded, calling initApp directly");
     initApp();
 }
-
-
