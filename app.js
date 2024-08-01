@@ -10,10 +10,23 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+try {
+  firebase.initializeApp(firebaseConfig);
+  console.log("Firebase initialized successfully");
+} catch (error) {
+  console.error("Error initializing Firebase:", error);
+}
 
 // Initialize Firestore
-const db = firebase.firestore();
+let db;
+try {
+  db = firebase.firestore();
+  console.log("Firestore initialized successfully");
+} catch (error) {
+  console.error("Error initializing Firestore:", error);
+}
+
+
 
 let dpias = [];
 let currentDPIA = null;
@@ -106,9 +119,11 @@ async function handleStep4Submit(e) {
     }
 }
 
+
+
 // Modify initApp to load DPIAs from Firestore when the app starts
-async function initApp() {
-    console.log("Initializing app");
+function initApp() {
+  console.log("initApp function called");
     logToPage("Initializing app");
     try {
         const createButton = document.getElementById('createNewDPIA');
@@ -125,6 +140,15 @@ async function initApp() {
         console.error("Error in initialization:", error);
         logToPage("Error in initialization: " + error.message);
     }
+}
+
+// Ensure the DOM is fully loaded before running the script
+if (document.readyState === 'loading') {
+  console.log("Document still loading, adding event listener");
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  console.log("Document already loaded, calling initApp directly");
+  initApp();
 }
 
 // The rest of your code remains the same
