@@ -26,20 +26,19 @@ try {
   console.error("Error initializing Firestore:", error);
 }
 
-function createNewDPIA() {
+async function createNewDPIA() {
     console.log("createNewDPIA function called");
     logToPage("Creating new DPIA");
     try {
-        const newDPIA = { id: Date.now(), status: 'draft', steps: {} };
+        const newDPIA = { id: Date.now().toString(), status: 'draft', steps: {} };
         console.log("New DPIA object created:", newDPIA);
         
-        // Temporarily comment out Firestore operations for testing
-        // const docRef = await db.collection("dpias").add(newDPIA);
-        // newDPIA.id = docRef.id;
+        const docRef = await db.collection("dpias").add(newDPIA);
+        newDPIA.id = docRef.id;
         
         dpias.push(newDPIA);
         console.log("DPIA added to local array");
-        updateDPIAList();
+        await updateDPIAList();
         showDPIAStep1(newDPIA);
     } catch (error) {
         console.error("Error in createNewDPIA:", error);
@@ -47,7 +46,7 @@ function createNewDPIA() {
     }
 }
 
-function updateDPIAList() {
+async function updateDPIAList() {
     console.log("updateDPIAList function called");
     try {
         const listElement = document.getElementById('dpiaListItems');
@@ -55,6 +54,10 @@ function updateDPIAList() {
             throw new Error("dpiaListItems element not found");
         }
         listElement.innerHTML = '';
+        
+        // Fetch DPIAs from Firestore
+        const snapshot = await db.collection("dpias").get();
+        dpias = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
         
         console.log("Number of DPIAs:", dpias.length);
         dpias.forEach(dpia => {
@@ -71,6 +74,11 @@ function updateDPIAList() {
     }
 }
 
+function showDPIAStep1(dpia) {
+    console.log("Showing DPIA Step 1", dpia);
+    // ... (rest of the function)
+
+  
 function initApp() {
     console.log("initApp function called");
     try {
@@ -91,6 +99,37 @@ function initApp() {
     }
 }
 
+  function initApp() {
+    console.log("initApp function called");
+    try {
+        const createButton = document.getElementById('createNewDPIA');
+        if (!createButton) {
+            throw new Error("createNewDPIA button not found");
+        }
+        console.log("Adding click event listener to createNewDPIA button");
+        createButton.addEventListener('click', function(event) {
+            console.log("Create DPIA button clicked");
+            createNewDPIA();
+        });
+        console.log("Click event listener added successfully");
+        updateDPIAList();
+    } catch (error) {
+        console.error("Error in initialization:", error);
+        logToPage("Error in initialization: " + error.message);
+    }
+}
+
+function logToPage(message) {
+    console.log(message);
+    const errorDisplay = document.getElementById('errorDisplay');
+    if (errorDisplay) {
+        errorDisplay.style.display = 'block';
+        errorDisplay.innerHTML += message + '<br>';
+    } else {
+        console.error("Error display element not found");
+    }
+}
+
 // Ensure the DOM is fully loaded before running the script
 if (document.readyState === 'loading') {
     console.log("Document still loading, adding event listener");
@@ -100,14 +139,4 @@ if (document.readyState === 'loading') {
     initApp();
 }
 
-// Add this function to log messages to the page
-function logToPage(message) {
-    console.log(message); // Also log to console for debugging
-    const errorDisplay = document.getElementById('errorDisplay');
-    if (errorDisplay) {
-        errorDisplay.style.display = 'block';
-        errorDisplay.innerHTML += message + '<br>';
-    } else {
-        console.error("Error display element not found");
-    }
-}
+
