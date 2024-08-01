@@ -86,39 +86,35 @@ async function updateDPIAList() {
 
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
-    if (!dpia.id) {
-        console.error("DPIA is missing an ID", dpia);
-        logToPage("Error: DPIA is missing an ID");
-        return;
-    }
     currentDPIA = dpia;
     
-    // Hide the DPIA list and show the Step 1 form
-    document.getElementById('dpiaList').style.display = 'none';
+    document.getElementById('dpiaList').classList.add('hidden');
     const step1Element = document.getElementById('dpiaStep1');
-    step1Element.style.display = 'block';
+    step1Element.classList.remove('hidden');
     
-    // Populate the form with existing data if available
     step1Element.innerHTML = `
-        <h2>Step 1: Identify the need for a DPIA</h2>
         <form id="dpiaStep1Form">
             <div class="form-section">
                 <h3>1. What does the project aim to achieve?</h3>
+                <p class="explanation">Explain broadly what the project aims to achieve and what type of processing it involves.</p>
                 <textarea id="projectAims" required>${dpia.steps?.step1?.projectAims || ''}</textarea>
             </div>
             <div class="form-section">
                 <h3>2. What type of processing does it involve?</h3>
+                <p class="explanation">Describe the nature of the processing. How will you collect, use, store and delete data?</p>
                 <textarea id="processingType" required>${dpia.steps?.step1?.processingType || ''}</textarea>
             </div>
             <div class="form-section">
                 <h3>3. What is the source of the data?</h3>
+                <p class="explanation">Specify the source of the data you'll be processing.</p>
                 <input type="text" id="dataSource" required value="${dpia.steps?.step1?.dataSource || ''}">
             </div>
             <div class="form-section">
                 <h3>4. Why did you identify the need for a DPIA?</h3>
+                <p class="explanation">Summarise why you identified the need for a DPIA.</p>
                 <textarea id="dpiaJustification" required>${dpia.steps?.step1?.dpiaJustification || ''}</textarea>
             </div>
-            <button type="submit">Continue to Step 2</button>
+            <button type="submit" class="primary-button">Continue to Step 2</button>
         </form>
     `;
     
