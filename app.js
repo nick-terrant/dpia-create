@@ -1,3 +1,18 @@
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    // Your config object here
+    // apiKey: "YOUR_API_KEY",
+    // authDomain: "YOUR_AUTH_DOMAIN",
+    // projectId: "YOUR_PROJECT_ID",
+    // ...
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Initialize Firestore
+const db = firebase.firestore();
+
 let dpias = [];
 let currentDPIA = null;
 
