@@ -60,21 +60,20 @@ async function updateDPIAList() {
         
         // Fetch DPIAs from Firestore
         const snapshot = await db.collection("dpias").get();
-        dpias = snapshot.docs.map(doc => {
-            const data = doc.data();
-            if (!data.id) {
-                console.warn("DPIA missing ID, adding it", doc.id);
-                db.collection("dpias").doc(doc.id).update({ id: doc.id });
-            }
-            return { id: doc.id, ...data };
-        });
+        dpias = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
         
         console.log("Number of DPIAs:", dpias.length);
         dpias.forEach(dpia => {
             const li = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `checkbox-${dpia.id}`;
+            
             const button = document.createElement('button');
             button.textContent = `DPIA ${dpia.id} - ${dpia.status}`;
             button.onclick = () => showDPIAStep1(dpia);
+            
+            li.appendChild(checkbox);
             li.appendChild(button);
             listElement.appendChild(li);
         });
@@ -83,6 +82,31 @@ async function updateDPIAList() {
         logToPage("Error in updateDPIAList: " + error.message);
     }
 }
+
+async function deleteSelectedDPIAs() {
+    const selectedCheckboxes = document.querySelectorAll('#dpiaListItems input[type="checkbox"]:checked');
+    const selectedIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.id.replace('checkbox-', ''));
+    
+    if (selectedIds.length === 0) {
+        alert("Please select at least one DPIA to delete.");
+        return;
+    }
+    
+    const confirmDelete = confirm(`Are you sure you want to delete ${selectedIds.length} selected DPIA(s)?`);
+    if (!confirmDelete) return;
+    
+    try {
+        for (const id of selectedIds) {
+            await db.collection("dpias").doc(id).delete();
+        }
+        await updateDPIAList();
+        alert("Selected DPIAs have been deleted successfully.");
+    } catch (error) {
+        console.error("Error deleting DPIAs:", error);
+        alert("An error occurred while deleting DPIAs. Please try again.");
+    }
+}
+
 
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
@@ -313,22 +337,21 @@ function initApp() {
     console.log("initApp function called");
     try {
         const createButton = document.getElementById('createNewDPIA');
-        if (!createButton) {
-            throw new Error("createNewDPIA button not found");
+        const deleteButton = document.getElementById('deleteSelectedDPIAs');
+        
+        if (!createButton || !deleteButton) {
+            throw new Error("Required buttons not found");
         }
-        console.log("Adding click event listener to createNewDPIA button");
-        createButton.addEventListener('click', function(event) {
-            console.log("Create DPIA button clicked");
-            createNewDPIA();
-        });
-        console.log("Click event listener added successfully");
+        
+        createButton.addEventListener('click', createNewDPIA);
+        deleteButton.addEventListener('click', deleteSelectedDPIAs);
+        
         updateDPIAList();
     } catch (error) {
         console.error("Error in initialization:", error);
         logToPage("Error in initialization: " + error.message);
     }
 }
-
 
 console.log("End of app.js file reached");
 function logToPage(message) {
