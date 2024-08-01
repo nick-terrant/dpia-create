@@ -333,6 +333,13 @@ function initApp() {
     }
 }
 
+// Ensure the DOM is fully loaded before running the script
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOMContentLoaded event fired");
+    initApp();
+});
+
+console.log("End of app.js file reached");
 function logToPage(message) {
     console.log(message);
     const errorDisplay = document.getElementById('errorDisplay');
@@ -342,13 +349,4 @@ function logToPage(message) {
     } else {
         console.error("Error display element not found");
     }
-}
-
-// Ensure the DOM is fully loaded before running the script
-if (document.readyState === 'loading') {
-    console.log("Document still loading, adding event listener");
-    document.addEventListener('DOMContentLoaded', initApp);
-} else {
-    console.log("Document already loaded, calling initApp directly");
-    initApp();
 }
