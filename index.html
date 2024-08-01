@@ -112,11 +112,69 @@
                 <button type="submit">Continue to Next Step</button>
             </form>
         </div>
-        <div id="dpiaStep2" style="display: none;">
-            <h2>Step 2: Further Assessment</h2>
-            <p>This is a placeholder for DPIA Step 2.</p>
-            <button onclick="showDPIAList()">Back to DPIA List</button>
+<div id="dpiaStep2" style="display: none;">
+    <h2>Step 2: Data Specifics and Risk Assessment</h2>
+    <form id="dpiaStep2Form">
+        <div class="form-section">
+            <h3>1. What types of personal data are you handling?</h3>
+            <p class="explanation">Select all that apply:</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="dataTypes" value="name"> Names</label>
+                <label><input type="checkbox" name="dataTypes" value="contact"> Contact details</label>
+                <label><input type="checkbox" name="dataTypes" value="financial"> Financial information</label>
+                <label><input type="checkbox" name="dataTypes" value="health"> Health data</label>
+                <label><input type="checkbox" name="dataTypes" value="location"> Location data</label>
+                <label><input type="checkbox" name="dataTypes" value="biometric"> Biometric data</label>
+                <label><input type="checkbox" name="dataTypes" value="other"> Other sensitive data</label>
+            </div>
         </div>
+
+        <div class="form-section">
+            <h3>2. How many individuals' data will be processed?</h3>
+            <select id="dataVolume" required>
+                <option value="">Please select...</option>
+                <option value="small">Less than 100</option>
+                <option value="medium">100 - 1,000</option>
+                <option value="large">1,000 - 10,000</option>
+                <option value="very_large">More than 10,000</option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <h3>3. What are the potential risks to individuals?</h3>
+            <p class="explanation">Consider how your data processing might negatively impact people. Select all that apply:</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="risks" value="discrimination"> Discrimination</label>
+                <label><input type="checkbox" name="risks" value="financial_loss"> Financial loss</label>
+                <label><input type="checkbox" name="risks" value="reputation"> Damage to reputation</label>
+                <label><input type="checkbox" name="risks" value="physical_harm"> Physical harm</label>
+                <label><input type="checkbox" name="risks" value="loss_of_confidentiality"> Loss of confidentiality</label>
+                <label><input type="checkbox" name="risks" value="identity_theft"> Identity theft or fraud</label>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>4. What safeguards will you put in place?</h3>
+            <p class="explanation">Describe the measures you'll take to protect the data and minimize risks:</p>
+            <textarea id="safeguards" required></textarea>
+        </div>
+
+        <div class="form-section">
+            <h3>5. Will you be sharing data with any third parties?</h3>
+            <div>
+                <label><input type="radio" name="dataSharing" value="yes" required> Yes</label>
+                <label><input type="radio" name="dataSharing" value="no" required> No</label>
+            </div>
+            <div id="dataSharingDetails" style="display: none;">
+                <p>Please provide details about the third parties and why data needs to be shared:</p>
+                <textarea id="dataSharingExplanation"></textarea>
+            </div>
+        </div>
+
+        <button type="submit">Continue to Next Step</button>
+    </form>
+</div>
+        
     </div>
 
     <script>
