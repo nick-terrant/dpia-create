@@ -174,6 +174,83 @@
         <button type="submit">Continue to Next Step</button>
     </form>
 </div>
+
+<div id="dpiaStep3" style="display: none;">
+    <h2>Step 3: Ensuring Compliance and Data Subject Rights</h2>
+    <form id="dpiaStep3Form">
+        <div class="form-section">
+            <h3>1. How will you ensure data minimization?</h3>
+            <p class="explanation">Describe how you'll collect and retain only the data necessary for your purposes:</p>
+            <textarea id="dataMinimization" required></textarea>
+        </div>
+
+        <div class="form-section">
+            <h3>2. How long will you retain the data?</h3>
+            <select id="retentionPeriod" required>
+                <option value="">Please select...</option>
+                <option value="less_than_year">Less than 1 year</option>
+                <option value="1_to_3_years">1-3 years</option>
+                <option value="3_to_5_years">3-5 years</option>
+                <option value="5_to_10_years">5-10 years</option>
+                <option value="more_than_10_years">More than 10 years</option>
+                <option value="indefinitely">Indefinitely</option>
+            </select>
+            <p>Briefly explain the reason for this retention period:</p>
+            <textarea id="retentionJustification" required></textarea>
+        </div>
+
+        <div class="form-section">
+            <h3>3. How will you inform individuals about the processing?</h3>
+            <p class="explanation">Select all methods you'll use:</p>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="informMethods" value="privacy_notice"> Privacy Notice on website</label>
+                <label><input type="checkbox" name="informMethods" value="email"> Email notification</label>
+                <label><input type="checkbox" name="informMethods" value="form"> Information on data collection form</label>
+                <label><input type="checkbox" name="informMethods" value="contract"> Within contract terms</label>
+                <label><input type="checkbox" name="informMethods" value="other"> Other method</label>
+            </div>
+            <div id="otherInformMethod" style="display: none;">
+                <p>Please specify the other method:</p>
+                <input type="text" id="otherInformMethodText">
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>4. How will you support data subject rights?</h3>
+            <p class="explanation">Describe your processes for handling the following rights:</p>
+            <div>
+                <label>Right to access:</label>
+                <textarea name="subjectRights" required></textarea>
+            </div>
+            <div>
+                <label>Right to rectification:</label>
+                <textarea name="subjectRights" required></textarea>
+            </div>
+            <div>
+                <label>Right to erasure:</label>
+                <textarea name="subjectRights" required></textarea>
+            </div>
+            <div>
+                <label>Right to restrict processing:</label>
+                <textarea name="subjectRights" required></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>5. Will you be transferring data outside your country/region?</h3>
+            <div>
+                <label><input type="radio" name="dataTransfer" value="yes" required> Yes</label>
+                <label><input type="radio" name="dataTransfer" value="no" required> No</label>
+            </div>
+            <div id="dataTransferDetails" style="display: none;">
+                <p>Please provide details about the data transfers and safeguards in place:</p>
+                <textarea id="dataTransferExplanation"></textarea>
+            </div>
+        </div>
+
+        <button type="submit">Review DPIA</button>
+    </form>
+</div>
         
     </div>
 
