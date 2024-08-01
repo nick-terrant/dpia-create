@@ -37,6 +37,9 @@ async function createNewDPIA() {
         const docRef = await db.collection("dpias").add(newDPIA);
         newDPIA.id = docRef.id;
         
+        // Update the Firestore document with the id field
+        await db.collection("dpias").doc(docRef.id).update({ id: docRef.id });
+        
         dpias.push(newDPIA);
         console.log("DPIA added to local array and Firestore with ID:", newDPIA.id);
         await updateDPIAList();
@@ -75,9 +78,20 @@ async function updateDPIAList() {
     }
 }
 
+
 function showDPIAStep1(dpia) {
     console.log("Showing DPIA Step 1", dpia);
+    if (!dpia.id) {
+        console.error("DPIA is missing an ID", dpia);
+        logToPage("Error: DPIA is missing an ID");
+        return;
+    }
     currentDPIA = dpia;
+    
+    // Rest of the function remains the same
+    // ...
+}
+
     
     // Hide the DPIA list and show the Step 1 form
     document.getElementById('dpiaList').style.display = 'none';
@@ -119,6 +133,8 @@ async function handleStep1Submit(e) {
             throw new Error("No current DPIA or DPIA ID is missing");
         }
 
+        console.log("Current DPIA:", currentDPIA);
+
         currentDPIA.steps = currentDPIA.steps || {};
         currentDPIA.steps.step1 = {
             projectAims: document.getElementById('projectAims').value,
@@ -128,6 +144,25 @@ async function handleStep1Submit(e) {
         };
         
         console.log("Updating DPIA with ID:", currentDPIA.id);
+        
+        // Update Firestore
+        await db.collection("dpias").doc(currentDPIA.id).update({
+            "steps.step1": currentDPIA.steps.step1
+        });
+        
+        console.log("Step 1 data saved successfully");
+        // Here you would typically move to Step 2
+        // For now, let's just go back to the DPIA list
+        document.getElementById('dpiaStep1').style.display = 'none';
+        document.getElementById('dpiaList').style.display = 'block';
+        await updateDPIAList();
+    } catch (error) {
+        console.error("Error in handleStep1Submit:", error);
+        logToPage("Error in handleStep1Submit: " + error.message);
+        // Display a user-friendly error message
+        alert("An error occurred while saving the DPIA. Please try again.");
+    }
+}
         
         // Update Firestore
         await db.collection("dpias").doc(currentDPIA.id).update({
