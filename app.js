@@ -4,7 +4,7 @@ console.log("app.js loaded");
 let dpias = [];
 let currentDPIA = null;
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD1PHa_c_DzrbK_Zjt2hO4lwSdhNgZMFTo",
   authDomain: "smart-dpia.firebaseapp.com",
@@ -22,6 +22,9 @@ try {
   console.log("Firebase initialized successfully");
   db = firebase.firestore();
   console.log("Firestore initialized successfully");
+} catch (error) {
+  console.error("Error initializing Firebase:", error);
+}
 
 } catch (error) {
     console.error("Full error object:", error);
@@ -543,7 +546,7 @@ function logToPage(message) {
     console.log(message);
     const errorDisplay = document.getElementById('errorDisplay');
     if (errorDisplay) {
-        errorDisplay.style.display = 'block';
+        errorDisplay.classList.remove('hidden');
         errorDisplay.innerHTML += message + '<br>';
     } else {
         console.error("Error display element not found");
