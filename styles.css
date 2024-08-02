@@ -15,12 +15,12 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 header {
     background-color: white;
-    padding: 10px 20px;
+    padding: 15px 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -31,11 +31,11 @@ header {
 
 .container {
     max-width: 1200px;
-    margin: 20px auto 0;
+    margin: 40px auto;
     background-color: white;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2, h3 {
@@ -46,39 +46,52 @@ h1 { font-size: 2.5rem; margin-bottom: 30px; }
 h2 { font-size: 2rem; margin-top: 40px; margin-bottom: 20px; }
 h3 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; }
 
-.form-section {
+.dpia-list-container {
+    background-color: #F4F5F7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.dpia-list-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#dpiaListItems {
+    list-style-type: none;
+    padding: 0;
+}
+
+#dpiaListItems li {
     background-color: white;
     border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 25px;
-    margin-bottom: 25px;
-}
-
-.explanation {
-    font-size: 1rem;
-    font-style: italic;
-    color: #5E6C84;
-    margin-bottom: 15px;
-}
-
-textarea, input[type="text"], select {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid var(--border-color);
     border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 15px;
-    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
 }
 
-textarea:focus, input[type="text"]:focus, select:focus {
-    border-color: var(--primary-color);
-    outline: none;
+#dpiaListItems input[type="checkbox"] {
+    margin-right: 15px;
 }
 
-textarea {
-    min-height: 120px;
-    resize: vertical;
+#dpiaListItems button {
+    flex-grow: 1;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease;
+}
+
+#dpiaListItems button:hover {
+    background-color: #DEEBFF;
 }
 
 button {
@@ -89,7 +102,6 @@ button {
     text-align: center;
     font-size: 1rem;
     font-weight: 600;
-    margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
@@ -97,34 +109,6 @@ button {
 
 button:hover {
     background-color: #0747A6;
-}
-
-#dpiaListItems {
-    list-style-type: none;
-    padding: 0;
-}
-
-#dpiaListItems li {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-}
-
-#dpiaListItems input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-#dpiaListItems button {
-    flex-grow: 1;
-    text-align: left;
-    background-color: #DEEBFF;
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-}
-
-#dpiaListItems button:hover {
-    background-color: var(--primary-color);
-    color: white;
 }
 
 #errorDisplay {
@@ -141,26 +125,4 @@ button:hover {
     display: none;
 }
 
-.checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.checkbox-grid label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.checkbox-grid input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-@media (max-width: 768px) {
-    .container { padding: 20px; }
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.75rem; }
-    h3 { font-size: 1.25rem; }
-}
+/* Add more styles for form elements, DPIA steps, etc. */
