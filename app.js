@@ -1,34 +1,30 @@
 console.log("app.js loaded");
-
 // Declare dpias at the top level
 let dpias = [];
 let currentDPIA = null;
-
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD1PHa_c_DzrbK_Zjt2hO4lwSdhNgZMFTo",
-  authDomain: "smart-dpia.firebaseapp.com",
-  projectId: "smart-dpia",
-  storageBucket: "smart-dpia.appspot.com",
-  messagingSenderId: "755471262348",
-  appId: "1:755471262348:web:104795a08707a02f95d1a9",
-  measurementId: "G-0SCK0RT47C"
+apiKey: "AIzaSyD1PHa_c_DzrbK_Zjt2hO4lwSdhNgZMFTo",
+authDomain: "smart-dpia.firebaseapp.com",
+projectId: "smart-dpia",
+storageBucket: "smart-dpia.appspot.com",
+messagingSenderId: "755471262348",
+appId: "1:755471262348:web:104795a08707a02f95d1a9",
+measurementId: "G-0SCK0RT47C"
 };
-
 // Initialize Firebase
 let db;
 try {
-  firebase.initializeApp(firebaseConfig);
-  console.log("Firebase initialized successfully");
-  db = firebase.firestore();
-  console.log("Firestore initialized successfully");
+firebase.initializeApp(firebaseConfig);
+console.log("Firebase initialized successfully");
+db = firebase.firestore();
+console.log("Firestore initialized successfully");
 } catch (error) {
-  console.error("Error initializing Firebase:", error);
-} 
-
+console.error("Error initializing Firebase:", error);
+}
 if (!db) {
-  console.error("Firestore not initialized");
-  alert("Database not initialized. Please refresh the page and try again.");
+console.error("Firestore not initialized");
+alert("Database not initialized. Please refresh the page and try again.");
 }
 
 function showEditView() {
