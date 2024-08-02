@@ -25,7 +25,11 @@ try {
 } catch (error) {
   console.error("Error initializing Firebase:", error);
 }
-
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
 async function createNewDPIA() {
     console.log("createNewDPIA function called");
     logToPage("Creating new DPIA");
@@ -47,6 +51,11 @@ async function createNewDPIA() {
         console.error("Error in createNewDPIA:", error);
         logToPage("Error in createNewDPIA: " + error.message);
     }
+}
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
 }
 
 async function updateDPIAList() {
@@ -83,6 +92,11 @@ async function updateDPIAList() {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
 async function deleteSelectedDPIAs() {
     const selectedCheckboxes = document.querySelectorAll('#dpiaListItems input[type="checkbox"]:checked');
     const selectedIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.id.replace('checkbox-', ''));
@@ -91,7 +105,12 @@ async function deleteSelectedDPIAs() {
         alert("Please select at least one DPIA to delete.");
         return;
     }
-    
+
+  if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
     const confirmDelete = confirm(`Are you sure you want to delete ${selectedIds.length} selected DPIA(s)?`);
     if (!confirmDelete) return;
     
@@ -107,6 +126,11 @@ async function deleteSelectedDPIAs() {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
 
 function showDPIAStep1(dpia) {
    fetchFirestoreData();
@@ -145,6 +169,12 @@ function showDPIAStep1(dpia) {
     document.getElementById('dpiaStep1Form').onsubmit = handleStep1Submit;
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 async function handleStep1Submit(e) {
     e.preventDefault();
     try {
@@ -181,6 +211,11 @@ async function handleStep1Submit(e) {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
 
 function showDPIAStep2() {
     console.log("Showing DPIA Step 2");
@@ -214,6 +249,12 @@ function showDPIAStep2() {
     document.getElementById('dpiaStep2Form').onsubmit = handleStep2Submit;
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 async function handleStep2Submit(e) {
     e.preventDefault();
     console.log("Handling Step 2 submission");
@@ -242,6 +283,12 @@ async function handleStep2Submit(e) {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 function showDPIAStep3() {
     console.log("Showing DPIA Step 3");
     const step3Element = document.getElementById('dpiaStep3');
@@ -260,6 +307,12 @@ function showDPIAStep3() {
     `;
     
     document.getElementById('dpiaStep3Form').onsubmit = handleStep3Submit;
+}
+
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
 }
 
 async function handleStep3Submit(e) {
@@ -287,6 +340,12 @@ async function handleStep3Submit(e) {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 function showDPIAStep4() {
     console.log("Showing DPIA Step 4");
     const step4Element = document.getElementById('dpiaStep4');
@@ -305,6 +364,12 @@ function showDPIAStep4() {
     `;
     
     document.getElementById('dpiaStep4Form').onsubmit = handleStep4Submit;
+}
+
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
 }
 
 async function handleStep4Submit(e) {
@@ -336,6 +401,12 @@ async function handleStep4Submit(e) {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 function initApp() {
     console.log("initApp function called");
     try {
@@ -355,6 +426,12 @@ function initApp() {
         logToPage("Error in initialization: " + error.message);
     }
 }
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 async function fetchFirestoreData() {
     try {
         const lawfulBases = await fetchCollectionData('LawfulBases', 'lawful-basis-list');
@@ -370,6 +447,12 @@ async function fetchFirestoreData() {
     }
 }
 
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
+}
+
 async function fetchCollectionData(collectionName, fieldName) {
     const snapshot = await db.collection(collectionName).get();
     if (snapshot.empty) {
@@ -377,6 +460,12 @@ async function fetchCollectionData(collectionName, fieldName) {
         return [];
     }
     return snapshot.docs[0].data()[fieldName] || [];
+}
+
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
 }
 
 function populateSelect(elementId, options) {
@@ -387,6 +476,12 @@ function populateSelect(elementId, options) {
         optionElement.textContent = option;
         select.appendChild(optionElement);
     });
+}
+
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
 }
 
 function populateCheckboxGrid(elementId, options) {
@@ -401,6 +496,12 @@ function populateCheckboxGrid(elementId, options) {
         label.appendChild(document.createTextNode(option));
         grid.appendChild(label);
     });
+}
+
+if (!db) {
+    console.error("Firestore not initialized");
+    alert("Database not initialized. Please refresh the page and try again.");
+    return;
 }
 
 function initApp() {
@@ -432,6 +533,7 @@ function initApp() {
 document.addEventListener('DOMContentLoaded', initApp);
 
 console.log("End of app.js file reached");
+
 function logToPage(message) {
     console.log(message);
     const errorDisplay = document.getElementById('errorDisplay');
@@ -442,6 +544,7 @@ function logToPage(message) {
         console.error("Error display element not found");
     }
 }
+
 function createNewDPIA() {
     console.log("createNewDPIA function called");
     // ... rest of the function
