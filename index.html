@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,32 +12,32 @@
     </header>
 
     <div class="container">
-        <h1>DPIA Prototype</h1>
+    <h1>DPIA Prototype</h1>
 
-        <div id="errorDisplay" class="hidden"></div>
+    <div id="errorDisplay" class="hidden"></div>
 
-        <div id="mainView">
-            <div id="dpiaList" class="dpia-list-container">
-                <h2>Your DPIAs</h2>
-                <div class="dpia-list-actions">
-                    <button id="createNewDPIA">Create New DPIA</button>
-                    <button id="deleteSelectedDPIAs">Delete Selected</button>
-                </div>
-                <ul id="dpiaListItems"></ul>
+    <div id="mainView">
+        <div id="dpiaList" class="dpia-list-container">
+            <h2>Your DPIAs</h2>
+            <div class="dpia-list-actions">
+                <button id="createNewDPIA">Create New DPIA</button>
+                <button id="deleteSelectedDPIAs">Delete Selected</button>
             </div>
-        </div>
-
-        <div id="dpiaEditView" class="hidden">
-            <button id="backToList" class="secondary-button">Back to DPIA List</button>
-            <div id="dpiaStep1" class="dpia-step"></div>
-            <div id="dpiaStep2" class="dpia-step hidden"></div>
-            <div id="dpiaStep3" class="dpia-step hidden"></div>
-            <div id="dpiaStep4" class="dpia-step hidden"></div>
+            <ul id="dpiaListItems"></ul>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="app.js"></script>
-</body>
+    <div id="dpiaEditView" class="hidden">
+        <button id="backToList" class="secondary-button">Back to DPIA List</button>
+        <div id="dpiaStep1" class="dpia-step"></div>
+        <div id="dpiaStep2" class="dpia-step hidden"></div>
+        <div id="dpiaStep3" class="dpia-step hidden"></div>
+        <div id="dpiaStep4" class="dpia-step hidden"></div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="app.js"></script>
+    </body>
 </html>
