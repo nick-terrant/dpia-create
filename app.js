@@ -22,9 +22,14 @@ try {
   console.log("Firebase initialized successfully");
   db = firebase.firestore();
   console.log("Firestore initialized successfully");
+
 } catch (error) {
-  console.error("Error initializing Firebase:", error);
+    console.error("Full error object:", error);
+    logToPage("Error: " + error.message);
+    alert("An error occurred. Please check the console for more details.");
 }
+  
+
 if (!db) {
     console.error("Firestore not initialized");
     alert("Database not initialized. Please refresh the page and try again.");
