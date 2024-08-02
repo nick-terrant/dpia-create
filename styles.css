@@ -27,11 +27,25 @@ header {
     --error-color: #FF5630;  /* Red from the palette */
 }
 
+/* Remove or update this @font-face rule */
+/*
 @font-face {
     font-family: 'Display';
     src: url('path-to-your-display-font-file.woff2') format('woff2');
-    /* Add more src lines for different font file formats if needed */
 }
+*/
+
+/* Update the body font-family to use a system font */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px;
+}
+
+/* ... rest of the CSS remains the same ... */
 
 body {
     font-family: 'Display', sans-serif;
