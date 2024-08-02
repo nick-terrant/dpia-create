@@ -452,7 +452,8 @@ function deleteSelectedDPIAs() {
     // ... rest of the function
 }
 
+// Remove this extra closing parenthesis and semicolon at the end of the file
+// );
+
 // Ensure the DOM is fully loaded before running the script
 document.addEventListener('DOMContentLoaded', initApp);
-
-);
