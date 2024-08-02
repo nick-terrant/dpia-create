@@ -142,6 +142,21 @@ function showDPIAStep1(dpia) {
         <p class="explanation">Summarise why you identified the need for a DPIA.</p>
         <textarea id="dpiaJustification" required>${dpia.steps?.step1?.dpiaJustification || ''}</textarea>
       </div>
+      <div class="form-section">
+        <h3>5. What is the lawful basis for processing?</h3>
+        <p class="explanation">Select the lawful basis for processing the data.</p>
+        <select id="lawfulBasis" required></select>
+      </div>
+      <div class="form-section">
+        <h3>6. What is the processing purpose?</h3>
+        <p class="explanation">Select the purpose for processing the data.</p>
+        <select id="processingPurpose" required></select>
+      </div>
+      <div class="form-section">
+        <h3>7. What are the data categories?</h3>
+        <p class="explanation">Select the categories of data being processed.</p>
+        <div id="dataCategories" class="checkbox-grid"></div>
+      </div>
       <button type="submit" class="primary-button">Continue to Step 2</button>
     </form>
   `;
