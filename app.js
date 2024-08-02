@@ -441,6 +441,16 @@ function logToPage(message) {
     } else {
         console.error("Error display element not found");
     }
+}
+function createNewDPIA() {
+    console.log("createNewDPIA function called");
+    // ... rest of the function
+}
+
+function deleteSelectedDPIAs() {
+    console.log("deleteSelectedDPIAs function called");
+    // ... rest of the function
+}
 
 // Ensure the DOM is fully loaded before running the script
 document.addEventListener('DOMContentLoaded', initApp);
