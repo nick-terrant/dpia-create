@@ -422,6 +422,39 @@ function populateCheckboxGrid(elementId, options) {
   });
 }
 
+async function fetchCollectionData(collectionName, fieldName) {
+  const snapshot = await db.collection(collectionName).get();
+  if (snapshot.empty) {
+    console.log(`No documents found in ${collectionName}`);
+    return [];
+  }
+  return snapshot.docs[0].data()[fieldName] || [];
+}
+
+function populateSelect(elementId, options) {
+  const select = document.getElementById(elementId);
+  options.forEach(option => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option;
+    optionElement.textContent = option;
+    select.appendChild(optionElement);
+  });
+}
+
+function populateCheckboxGrid(elementId, options) {
+  const grid = document.getElementById(elementId);
+  options.forEach(option => {
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.name = 'dataCategory';
+    checkbox.value = option;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(option));
+    grid.appendChild(label);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', initApp);
 
 console.log("End of app.js file reached");
