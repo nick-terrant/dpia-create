@@ -125,4 +125,83 @@ button:hover {
     display: none;
 }
 
-/* Add more styles for form elements, DPIA steps, etc. */
+#mainView, #dpiaEditView {
+    transition: opacity 0.3s ease;
+}
+
+#dpiaEditView {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.secondary-button {
+    background-color: #F4F5F7;
+    color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.secondary-button:hover {
+    background-color: #EBECF0;
+}
+
+.form-section {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.explanation {
+    font-size: 1rem;
+    font-style: italic;
+    color: #5E6C84;
+    margin-bottom: 15px;
+}
+
+textarea, input[type="text"], select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+textarea:focus, input[type="text"]:focus, select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-grid label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox-grid input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .container { padding: 20px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
+}
