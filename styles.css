@@ -1,3 +1,23 @@
+:root {
+    --primary-color: #0052CC;
+    --secondary-color: #172B4D;
+    --background-color: #F4F5F7;
+    --text-color: #172B4D;
+    --border-color: #DFE1E6;
+    --success-color: #36B37E;
+    --warning-color: #FFAB00;
+    --error-color: #FF5630;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 20px;
+}
+
 header {
     background-color: white;
     padding: 10px 20px;
@@ -5,88 +25,26 @@ header {
 }
 
 .logo {
-    height: 40px; /* Adjust this value to fit your needs */
+    height: 40px;
     width: auto;
-}
-
-/* Adjust your existing container style */
-.container {
-    margin-top: 20px; /* Add some space below the header */
-    /* ... rest of your container styles ... */
-}
-
-
-:root {
-    --primary-color: #0052CC;  /* A vibrant blue from the palette */
-    --secondary-color: #172B4D; /* A dark blue for text */
-    --background-color: #F4F5F7; /* Light gray background */
-    --text-color: #172B4D;
-    --border-color: #DFE1E6;
-    --success-color: #36B37E; /* Green from the palette */
-    --warning-color: #FFAB00; /* Yellow from the palette */
-    --error-color: #FF5630;  /* Red from the palette */
-}
-
-/* Remove or update this @font-face rule */
-/*
-@font-face {
-    font-family: 'Display';
-    src: url('path-to-your-display-font-file.woff2') format('woff2');
-}
-*/
-
-/* Update the body font-family to use a system font */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    line-height: 1.5;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 20px;
-}
-
-/* ... rest of the CSS remains the same ... */
-
-body {
-    font-family: 'Display', sans-serif;
-    line-height: 1.5;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    margin: 0;
-    padding: 20px;
 }
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 20px auto 0;
     background-color: white;
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    font-size: 2.5rem; /* Display 2xl */
-    font-weight: bold;
+h1, h2, h3 {
     color: var(--secondary-color);
-    margin-bottom: 30px;
 }
 
-h2 {
-    font-size: 2rem; /* Display xl */
-    font-weight: semibold;
-    color: var(--secondary-color);
-    margin-top: 40px;
-    margin-bottom: 20px;
-}
-
-h3 {
-    font-size: 1.5rem; /* Display lg */
-    font-weight: medium;
-    color: var(--secondary-color);
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
+h1 { font-size: 2.5rem; margin-bottom: 30px; }
+h2 { font-size: 2rem; margin-top: 40px; margin-bottom: 20px; }
+h3 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; }
 
 .form-section {
     background-color: white;
@@ -97,13 +55,13 @@ h3 {
 }
 
 .explanation {
-    font-size: 1rem; /* Display md */
+    font-size: 1rem;
     font-style: italic;
-    color: #5E6C84; /* A muted color for explanatory text */
+    color: #5E6C84;
     margin-bottom: 15px;
 }
 
-textarea, input[type="text"] {
+textarea, input[type="text"], select {
     width: 100%;
     padding: 12px;
     border: 2px solid var(--border-color);
@@ -111,10 +69,9 @@ textarea, input[type="text"] {
     box-sizing: border-box;
     margin-bottom: 15px;
     font-size: 1rem;
-    font-family: 'Display', sans-serif;
 }
 
-textarea:focus, input[type="text"]:focus {
+textarea:focus, input[type="text"]:focus, select:focus {
     border-color: var(--primary-color);
     outline: none;
 }
@@ -130,10 +87,8 @@ button {
     border: none;
     padding: 12px 24px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 1rem;
-    font-weight: semibold;
+    font-weight: 600;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
@@ -141,7 +96,7 @@ button {
 }
 
 button:hover {
-    background-color: #0747A6; /* Darker shade of primary color */
+    background-color: #0747A6;
 }
 
 #dpiaListItems {
@@ -151,73 +106,8 @@ button:hover {
 
 #dpiaListItems li {
     margin-bottom: 15px;
-}
-
-#dpiaListItems button {
-    width: 100%;
-    text-align: left;
-    background-color: #DEEBFF; /* Light blue background */
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    transition: all 0.3s ease;
-}
-
-#dpiaListItems button:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-#errorDisplay {
-    background-color: #FFEBE6; /* Light red background */
-    color: var(--error-color);
-    padding: 15px;
-    margin-bottom: 25px;
-    border: 1px solid var(--error-color);
-    border-radius: 4px;
-    font-weight: medium;
-}
-
-.hidden {
-    display: none;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    h2 {
-        font-size: 1.75rem;
-    }
-    
-    h3 {
-        font-size: 1.25rem;
-    }
-
-.dpia-list-container {
-    max-width: 600px;
-    margin-left: 0;
-}
-
-.dpia-list-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-#dpiaListItems {
-    list-style-type: none;
-    padding: 0;
-}
-
-#dpiaListItems li {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 #dpiaListItems input[type="checkbox"] {
@@ -227,24 +117,28 @@ button:hover {
 #dpiaListItems button {
     flex-grow: 1;
     text-align: left;
-}
-
-.secondary-button {
     background-color: #DEEBFF;
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
 
-/* Add these styles to your existing CSS file */
+#dpiaListItems button:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
 
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border-color);
+#errorDisplay {
+    background-color: #FFEBE6;
+    color: var(--error-color);
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid var(--error-color);
     border-radius: 4px;
-    background-color: white;
-    font-size: 16px;
-    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.hidden {
+    display: none;
 }
 
 .checkbox-grid {
@@ -264,7 +158,9 @@ select {
     margin-right: 8px;
 }
 
-.secondary-button:hover {
-    background-color: #B3D4FF;
-}
+@media (max-width: 768px) {
+    .container { padding: 20px; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
 }
