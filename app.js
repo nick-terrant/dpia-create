@@ -24,12 +24,11 @@ try {
   console.log("Firestore initialized successfully");
 } catch (error) {
   console.error("Error initializing Firebase:", error);
-}
+} 
 
 if (!db) {
   console.error("Firestore not initialized");
   alert("Database not initialized. Please refresh the page and try again.");
-  return;
 }
 
 async function createNewDPIA() {
